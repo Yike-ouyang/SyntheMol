@@ -110,3 +110,5 @@ chemfunc visualize_molecules \
     --save_dir runs/antibiotics_weight_${WEIGHT}/hits
 done
 ```
+
+Since antibiotic weight 5 leads to the highest number of hits, we use hits from that run.
