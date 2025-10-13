@@ -32,6 +32,19 @@ class Scorer(ABC):
         """
         pass
 
+class CustomScorer(Scorer):
+    def __init__(self, score_function):
+        """
+        :param score_function: A Python function taking a SMILES string and returning a float.
+        """
+        self.score_function = score_function
+
+    def __call__(self, smiles: str) -> float:
+        try:
+            return float(self.score_function(smiles))
+        except Exception as e:
+            print(f"[CustomScorer] Error scoring {smiles}: {e}")
+            return 0.0
 
 class QEDScorer(Scorer):
     """Scores molecules using QED."""
@@ -225,6 +238,16 @@ def create_scorer(
             raise ValueError("Random forest requires a fingerprint type.")
 
         scorer = SKLearnScorer(model_path=model_path, fingerprint_type=fingerprint_type)
+    elif score_type == "custom":
+        if model_path is not None:
+            raise ValueError("Custom scorer does not use a model path.")
+        if fingerprint_type is not None:
+            raise ValueError("Custom scorer does not use fingerprints.")
+
+        # Import from a user module (you define this file)
+        from entry-cli.calc_score.py import calculate
+        scorer = CustomScorer(score_function=calculate)
+
     else:
         raise ValueError(f"Score type {score_type} is not supported.")
 
