@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import pandas as pd
-from entrycli.calc_score import calculate
+from calc_score import calculate
 
 def main():
     parser = argparse.ArgumentParser(description="Ajouter les scores Entry à un CSV de SMILES")
