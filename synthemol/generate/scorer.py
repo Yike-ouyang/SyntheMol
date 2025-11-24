@@ -245,7 +245,7 @@ def create_scorer(
             raise ValueError("Custom scorer does not use fingerprints.")
 
         # Import from a user module (you define this file)
-        from entry-cli.calc_score.py import calculate
+        from entrycli.calc_score.py import calculate
         scorer = CustomScorer(score_function=calculate)
 
     else:
