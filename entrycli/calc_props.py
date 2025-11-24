@@ -223,7 +223,7 @@ def run_confab(mol, rmsd_cutoff=0.5, conf_cutoff=100000, energy_cutoff=50.0, con
     :return: list of conformers for a given molecule
     :rtype: openbabel.OBMol
     """
-    pff = ob.OBForceField_FindType( "mmff94" )
+    pff = ob.OBForceField.FindForceField("MMFF94")
     pff.Setup(mol)
 
     pff.DiverseConfGen(rmsd_cutoff, conf_cutoff, energy_cutoff, confab_verbose)
