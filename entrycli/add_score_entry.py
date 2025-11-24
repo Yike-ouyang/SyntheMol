@@ -18,13 +18,20 @@ def main():
     if args.smiles_column not in df.columns:
         raise ValueError(f"La colonne '{args.smiles_column}' n'existe pas dans le CSV")
     
-    # Calculer les scores
-    df["score_entry"] = df[args.smiles_column].apply(lambda s: calculate(s))
+    # Calculer les scores avec affichage du nombre d'itérations restantes
+    scores = []
+    total = len(df)
+    for i, s in enumerate(df[args.smiles_column], start=1):
+        remaining = total - i
+        print(f"Calcul score {i}/{total} | itérations restantes: {remaining}", end='\r')
+        scores.append(calculate(s))
+    
+    df["score_entry"] = scores
     
     # Sauvegarder le CSV
     output_path = args.output or args.csv_path
     df.to_csv(output_path, index=False)
-    print(f"CSV sauvegardé avec les scores dans '{output_path}'")
+    print(f"\nCSV sauvegardé avec les scores dans '{output_path}'")
 
 if __name__ == "__main__":
     main()

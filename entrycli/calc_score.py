@@ -9,9 +9,9 @@ def scoring(properties):
 def calculate(smiles):
     mol = smiles_to_ob(smiles)
     properties = average_properties(mol)
-    print(properties)
+    #print(properties)
     score=scoring(properties)
-    print(score)
+    #print(score)
     return score
 
 calculate("O=C(O)[C@@H]2N3C(=O)[C@@H](NC(=O)[C@@H](c1ccccc1)N)[C@H]3SC2(C)C")
