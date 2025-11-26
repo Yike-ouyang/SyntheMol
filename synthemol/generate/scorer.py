@@ -18,7 +18,10 @@ from synthemol.models import (
     sklearn_load,
     sklearn_predict_on_molecule_ensemble,
 )
-
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from entrycli.calc_score import calculate
 
 class Scorer(ABC):
     """Base class for scoring molecules."""
@@ -245,7 +248,7 @@ def create_scorer(
             raise ValueError("Custom scorer does not use fingerprints.")
 
         # Import from a user module (you define this file)
-        from entrycli.calc_score.py import calculate
+        
         scorer = CustomScorer(score_function=calculate)
 
     else:
