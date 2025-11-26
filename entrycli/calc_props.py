@@ -196,8 +196,8 @@ def initial_geom_guess(smiles):
     ..todo: use openbabel for initial guess
     """
     m = Chem.MolFromSmiles(smiles)
-    m2 = Chem.AddHs(m)
-
+    m2 = m
+    #m2 = Chem.AddHs(m)
     # Generate initial guess
     AllChem.EmbedMolecule(m2, AllChem.ETKDG())
     AllChem.MMFFOptimizeMolecule(m2)
@@ -224,9 +224,11 @@ def run_confab(mol, rmsd_cutoff=0.5, conf_cutoff=100000, energy_cutoff=50.0, con
     :rtype: openbabel.OBMol
     """
     pff = ob.OBForceField.FindForceField("MMFF94")
+    print(pff)
     pff.Setup(mol)
+    pff.DiverseConfGen(rmsd_cutoff,  conf_cutoff, energy_cutoff, confab_verbose)
 
-    pff.DiverseConfGen(rmsd_cutoff, conf_cutoff, energy_cutoff, confab_verbose)
+    #pff.DiverseConfGen(rmsd_cutoff,  min(conf_cutoff, 500), energy_cutoff, confab_verbose)
 
     pff.GetConformers(mol);
 
