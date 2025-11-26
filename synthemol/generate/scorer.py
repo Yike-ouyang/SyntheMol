@@ -21,7 +21,7 @@ from synthemol.models import (
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from entrycli.calc_score import calculate
+from calc_score import calculate
 
 class Scorer(ABC):
     """Base class for scoring molecules."""
